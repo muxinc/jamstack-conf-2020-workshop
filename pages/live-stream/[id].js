@@ -21,14 +21,21 @@ export default () => {
     id ? `/api/live-stream/${id}` : null
   , fetcher)
 
-  console.log('debug', error)
   if (error) {
     return <Layout title="Live stream page"><ErrorMessage message={error.message} /></Layout>
   }
-  console.log('debug', data, error)
+
   return (
     <Layout title="Live stream page">
       <div>Live stream page {id}</div>
+      {
+        data && (
+          <>
+            <p>stream key: {data.stream_key}</p>
+            <p>status: {data.status}</p>
+          </>
+        )
+      }
     </Layout>
   )
 }
