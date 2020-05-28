@@ -10,8 +10,16 @@ import Layout from '../../components/layout'
 import request from '../../components/request'
 import Spinner from '../../components/spinner'
 import ErrorMessage from '../../components/error-message'
+import VideoPlayer from '../../components/video-player'
 
 const fetcher = (url) => request(url, {method: 'GET'})
+
+const StreamInfo = ({ stream_key, status}) => (
+  <div>
+    <p>stream key: {stream_key}</p>
+    <p>status: {status}</p>
+  </div>
+)
 
 export default () => {
   const router = useRouter()
@@ -19,23 +27,20 @@ export default () => {
   console.log('rendering', id)
   const { data, error } = useSWR(() =>
     id ? `/api/live-stream/${id}` : null
-  , fetcher)
+  , fetcher, { refreshInterval: 5000 })
 
   if (error) {
     return <Layout title="Live stream page"><ErrorMessage message={error.message} /></Layout>
   }
 
+  if (!data) return <Layout><Spinner /></Layout>
+
   return (
-    <Layout title="Live stream page">
-      <div>Live stream page {id}</div>
-      {
-        data && (
-          <>
-            <p>stream key: {data.stream_key}</p>
-            <p>status: {data.status}</p>
-          </>
-        )
-      }
+    <Layout title="Producer page">
+      <StreamInfo stream_key={data.stream_key} status={data.status} />
+      <div>
+        {data.status === 'active' && <VideoPlayer src={data.playback_url} />}
+      </div>
     </Layout>
   )
 }

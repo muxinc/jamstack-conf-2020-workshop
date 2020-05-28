@@ -10,7 +10,8 @@ export default async function liveStreamHandler(req, res) {
         const liveStream = await Video.LiveStreams.get(req.query.id)
         res.json({
           status: liveStream.status,
-          stream_key: liveStream.stream_key
+          stream_key: liveStream.stream_key,
+          playback_url: `https://stream.mux.com/${liveStream.playback_ids[0].id}.m3u8`
         })
       } catch (e) {
         res.statusCode = 500
