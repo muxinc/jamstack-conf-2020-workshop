@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import Router from 'next/router'
 import Button from './button'
 import Spinner from './spinner'
 import ErrorMessage from './error-message'
@@ -12,7 +13,7 @@ export default () => {
     setIsCreating(true)
     try {
       const resp = await request('/api/live-stream', {method: 'POST'})
-      console.log('resp', resp)
+      Router.push(`/live-stream/${resp.id}`)
     } catch (e) {
       console.error('Error creating live stream', e)
       setErrorMessage('Error creating live stream')
