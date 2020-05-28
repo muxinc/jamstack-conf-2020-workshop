@@ -1,13 +1,13 @@
 import Mux from '@mux/mux-node'
 const { Video } = new Mux()
 
-export default async function uploadHandler(req, res) {
+export default async function liveStreamHandler(req, res) {
   const { method } = req;
 
   switch (method) {
     case 'POST':
       try {
-          // make an api call to mux to creat a live stream
+        // make an api call to mux to creat a live stream
         const liveStream = await Video.LiveStreams.create({
           playback_policy: 'public',
           new_asset_settings: { playback_policy: 'public' }

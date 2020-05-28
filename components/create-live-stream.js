@@ -2,6 +2,7 @@ import { useState } from 'react'
 import Button from './button'
 import Spinner from './spinner'
 import ErrorMessage from './error-message'
+import request from './request'
 
 export default () => {
   const [isCreating, setIsCreating] = useState(false)
@@ -9,14 +10,9 @@ export default () => {
 
   const createLiveStream = async () => {
     setIsCreating(true)
-    // make an api request to the backend
-    // backend talks to Mux
-    // get a response
-    // POST /api/live-stream
     try {
-      let resp = await fetch('/api/live-stream', {method: 'POST'})
-      resp = await resp.json()
-      console.log('debug resp', resp)
+      const resp = await request('/api/live-stream', {method: 'POST'})
+      console.log('resp', resp)
     } catch (e) {
       console.error('Error creating live stream', e)
       setErrorMessage('Error creating live stream')
