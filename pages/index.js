@@ -1,10 +1,10 @@
-import UploadForm from '../components/upload-form'
-import UploadPage from '../components/upload-page'
+import Layout from '../components/layout'
+import CreateLiveStream from '../components/create-live-stream'
 
 export default function Home() {
   return (
-    <UploadPage>
-      <UploadForm />
-    </UploadPage>
+    <Layout title="Jamstack Live streaming">
+      <CreateLiveStream />
+    </Layout>
   )
 }
